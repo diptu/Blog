@@ -1,0 +1,161 @@
+{% include "nav.html" %}
+
+
+<section class="main-section alabaster"><!--main-section alabaster-start-->
+	<div class="container">
+    	<div class="row">
+			<figure class="col-lg-5 col-sm-4 wow fadeInLeft">
+
+				{% if  request.user.is_superuser %}
+
+					{% for obj in for_superuser_posts %}
+					<span style="color:red;">Draft</span> :<a href="{{obj.slug}}/">{{obj}}</a>
+					{% endfor %}
+				{% endif %}
+            	<img  src="/static/img/iphone.png" alt="">
+
+                <!-- {% if is_paginated %}
+                      <ul class="pagination">
+
+                          {% for i in paginator.page_range %}
+
+
+                            {% if page_obj.number == i   %}
+
+
+                <img  src="/static/img/pic_{{i}}.JPG" height="60%" width="60%"alt="">
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </ul>
+                      {% endif %}-->
+            </figure>
+        	<div class="col-lg-7 col-sm-8 featured-work">
+            	<h2>Recent Posts </h2>
+                {% include "posts/message.html" %}
+            	<P class="padding-b">
+
+                        <small>Order by last updated time </small></P>
+						<hr>
+
+                    {% for obj in object_list %}
+
+					{% if obj not in for_superuser_posts %}
+            	<div class="featured-box">
+
+
+
+                	<div class="featured-box-col2 wow fadeInRight delay-02s">
+
+						{% if obj.image %}
+
+						<figure class="col-lg-5 col-sm-4 wow fadeInLeft">
+
+
+							<img src="{{ obj.image.url}}" class="img-resp" />
+
+			            </figure>
+						{% endif %}
+						<div class="featured-box-col1 wow fadeInRight delay-02s">
+							<i class="fa-magic"></i>
+						</div>
+
+					    <h3><a href="{{obj.slug}}/">{{obj}}</a> -
+							{% if obj.draft %}<span style="color:red;">Draft</span>{% endif %}
+                    <small>{{ obj.updated|timesince }}</small></P></h3>
+                        <p>{{obj.content|linebreaks|truncatechars:130}} <a href="{{obj.slug}}/">  Read More</a></p>
+                    </div>
+                </div>
+
+				<hr>
+				{% endif %}
+                {% empty %}
+                    <li>No posts yet.</li>
+                {% endfor %}
+
+
+                {% if is_paginated %}
+                  <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                      {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+
+
+        </div>
+    </div>
+</div>
+</section><!--main-section alabaster-end-->
+
+
+
+<section class="main-section paddind" id="Portfolio"><!--main-section-start-->
+	<div class="container">
+    	<h2>Photo</h2>
+    	<h6>Assets files can be found here</h6>
+      <div class="portfolioFilter">
+        <ul class="Portfolio-nav wow fadeIn delay-02s">
+        	<li><a href="#" data-filter="*" class="current" >All</a></li>
+
+            <li><a href="#" data-filter=".webdesign" >This year</a></li>
+            <li><a href="#" data-filter=".printdesign" >This Month</a></li>
+            <li><a href="#" data-filter=".photography" >Previous years</a></li>
+        </ul>
+       </div>
+
+	</div>
+    <div class="portfolioContainer wow fadeInUp delay-04s">
+
+				{% for obj in month_wise_filter %}
+            	<div class=" Portfolio-box printdesign">
+
+                	<a href="#"><img src="{{ obj.image.url}}" alt="" weidth="350px" height="250px"></a>
+                	<h3>This months uplodaded files</h3>
+                    <p>This Month</p>
+
+                </div>
+				{% endfor %}<hr>
+
+				{% for obj in year_wise_filter %}
+            	<div class=" Portfolio-box webdesign">
+
+                	<a href="#"><img src="{{ obj.image.url}}" alt="" weidth="350px" height="250px"></a>
+                	<h3>This years uplodaded files</h3>
+                    <p>This Year</p>
+
+                </div>
+				{% endfor %}<hr>
+
+				{% for obj in older_filter %}
+				{% if obj.image %}
+            	<div class=" Portfolio-box photography">
+
+                	<a href="#"><img src="{{ obj.image.url}}" alt="" weidth="350px" height="250px"></a>
+                	<h3>Previous years uplodaded files</h3>
+                    <p>Previous years</p>
+
+                </div>
+				{% endif %}
+				{% endfor %}<hr>
+
+
+    </div>
+</section><!--main-section-end-->
+
+{% include "footer.html" %}

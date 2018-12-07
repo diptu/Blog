@@ -1,0 +1,101 @@
+{% include "nav.html" %}
+{% include "posts/message.html" %}
+
+<section class="main-section" id="service"><!--main-section-start-->
+	<div class="container">
+    	<h2>{{ object.title }} <small><span> - {{ object.timestamp|timesince }} ago </span></small></h2>
+
+    	<p>{{ object.content }}</p><h6></h6>
+		<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+		<hr>
+        <div class="row">
+        	<div class="col-lg-4 col-sm-6 wow fadeInLeft delay-05s">
+            	<div class="service-list">
+                	<div class="service-list-col1">
+
+                        <i class=" icon-map-marker"></i>
+
+                    </div>
+                	<div class="service-list-col2">
+
+                        {% if object.user.get_full_name %}
+                    <h3>Auther </h3>
+                        <p> {{ object.user.get_full_name }}</p>
+                        {% else %}
+                        <p>{{ object.user }}</p>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                        <i class="fa-clock-o"></i>
+
+                    </div>
+                	<div class="service-list-col2">
+                        <span><strong>Last updeted:</strong>    {{ object.updated|date }}<br>
+                            <strong>Today:</strong> {{ now|date }}<br></span>
+
+                    </div>
+                </div>
+
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa-pencil"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        {% if object.user.email %}
+                        <h3>Email</h3>
+                        <p> {{ object.user.email }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="service-list">
+                    <div class="service-list-col1">
+                    	<i class="fa-medkit"></i>
+                    </div>
+                    <div class="service-list-col2">
+
+
+                        <span><strong>Social Share Link</strong><br>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+                            Facebook
+                            </a>
+
+                            <a href="https://twitter.com/home?status={{ share_string}}%20{{ request.build_absolute_uri }}">
+                            Twitter
+                            </a>
+
+                            <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google+</a>
+
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ object.title }}&summary={{ share_string }}%20&source={{ request.build_absolute_uri }}">
+                            Linkedin
+                            </a>
+                            <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ object.title }}"> Reddit</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <figure class="col-lg-5 col-sm-6  text-right wow fadeInUp delay-02s">
+
+                {% if object.image %}
+                <img src="{{ object.image.url}}"  alt=""/>
+                {% endif %}
+
+            </figure>
+
+        </div>
+		<hr>
+		<div class="col-sm-12">
+		<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+	</div>
+	</div>
+</section><!--main-section-end-->
+
+
+
+
+{% include "footer.html" %}

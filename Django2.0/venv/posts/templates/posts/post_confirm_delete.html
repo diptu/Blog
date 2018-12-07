@@ -1,0 +1,25 @@
+
+{% include "nav.html" %}
+
+<div class="container">
+<section class="main-section contact" id="contact">
+
+        <div class="row">
+
+        	<div class="col-lg-7 col-sm-8 wow fadeInUp delay-05s">
+
+            	<div class="form">
+                    <form action="" method="post">{% csrf_token %}
+                        <p>Are you sure you want to delete "{{ object }}"?</p>
+                        <input class="input-btn" type="submit" value="Confirm" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+</section>
+</div>
+
+
+
+{% include "footer.html" %}
